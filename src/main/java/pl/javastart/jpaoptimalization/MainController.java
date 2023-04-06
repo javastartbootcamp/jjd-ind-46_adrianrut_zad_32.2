@@ -5,13 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.javastart.jpaoptimalization.country.Country;
 import pl.javastart.jpaoptimalization.country.CountryService;
-import pl.javastart.jpaoptimalization.countrylanguage.CountryLanguage;
 import pl.javastart.jpaoptimalization.countrylanguage.CountryLanguageService;
 import pl.javastart.jpaoptimalization.countrylanguage.LanguageInCountry;
 
-import javax.persistence.OrderBy;
 import java.util.*;
-import java.util.stream.Stream;
 
 @Controller
 public class MainController {

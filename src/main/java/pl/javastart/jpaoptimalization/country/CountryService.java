@@ -1,7 +1,6 @@
 package pl.javastart.jpaoptimalization.country;
 
 import org.springframework.stereotype.Service;
-import pl.javastart.jpaoptimalization.countrylanguage.LanguageInCountry;
 
 import java.util.List;
 
