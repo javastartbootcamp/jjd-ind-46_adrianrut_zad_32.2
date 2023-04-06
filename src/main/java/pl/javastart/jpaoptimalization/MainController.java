@@ -7,8 +7,11 @@ import pl.javastart.jpaoptimalization.country.Country;
 import pl.javastart.jpaoptimalization.country.CountryService;
 import pl.javastart.jpaoptimalization.countrylanguage.CountryLanguage;
 import pl.javastart.jpaoptimalization.countrylanguage.CountryLanguageService;
+import pl.javastart.jpaoptimalization.countrylanguage.LanguageInCountry;
 
-import java.util.List;
+import javax.persistence.OrderBy;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Controller
 public class MainController {
@@ -24,7 +27,7 @@ public class MainController {
 
     @GetMapping("/najwieksze-miasta")
     public String countryWithBiggestCity(Model model) {
-        List<Country> countries = countryService.findAll();
+        List<Country> countries = countryService.findSorted();
         model.addAttribute("countries", countries);
 
         return "countryWithBiggestCity";
@@ -41,7 +44,7 @@ public class MainController {
 
     @GetMapping("/jezyki-i-kraje")
     public String languagesWithCountries(Model model) {
-        List<CountryLanguage> languages = countryLanguageService.findAll();
+        List<LanguageInCountry> languages = countryLanguageService.findAllWithLanguage();
 
         model.addAttribute("languages", languages);
 

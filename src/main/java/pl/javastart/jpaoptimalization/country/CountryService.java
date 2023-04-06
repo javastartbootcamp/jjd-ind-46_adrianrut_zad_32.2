@@ -1,6 +1,7 @@
 package pl.javastart.jpaoptimalization.country;
 
 import org.springframework.stereotype.Service;
+import pl.javastart.jpaoptimalization.countrylanguage.LanguageInCountry;
 
 import java.util.List;
 
@@ -16,4 +17,9 @@ public class CountryService {
     public List<Country> findAll() {
         return countryRepository.findAll();
     }
+
+    public List<Country> findSorted() {
+        return countryRepository.findByOrderByName();
+    }
+
 }
