@@ -7,15 +7,7 @@ import java.util.List;
 @Service
 public class CountryLanguageService {
 
-    private final CountryLanguageRepository countryLanguageRepository;
 
-    public CountryLanguageService(CountryLanguageRepository countryLanguageRepository) {
-        this.countryLanguageRepository = countryLanguageRepository;
-    }
-
-    public List<LanguageInCountry> findAllWithLanguage() {
-        return countryLanguageRepository.findByOrderByName();
-    }
 
 
 }
