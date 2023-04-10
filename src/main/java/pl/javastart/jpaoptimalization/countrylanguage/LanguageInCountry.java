@@ -1,22 +1,25 @@
 package pl.javastart.jpaoptimalization.countrylanguage;
 
 
+import pl.javastart.jpaoptimalization.country.Country;
+
+import java.util.List;
 
 public class LanguageInCountry {
 
-    private String country;
     private String language;
+    private List<Country> country;
 
-    public LanguageInCountry(String country, String language) {
-        this.country = country;
+    public LanguageInCountry(String language, List<Country> country) {
         this.language = language;
+        this.country = country;
     }
 
-    public String getCountry() {
+    public List<Country> getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(List<Country> country) {
         this.country = country;
     }
 

@@ -25,16 +25,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="countryWitLanguage: ${country}">
-            <td th:text="${countryWitLanguage.language}"></td>
-            <td th:text="${countryWitLanguage.country}"></td>
+        <tr th:each="countryWithLanguage: ${country}">
+            <td th:text="${countryWithLanguage.language}"></td>
+            <td th:each="country: ${countryWithLanguage.country}" th:text="${country.name}"></td>
         </tr>
         </tbody>
     </table>
 
 </div>
-
-
-
 </body>
 </html>

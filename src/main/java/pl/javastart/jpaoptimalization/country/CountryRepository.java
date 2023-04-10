@@ -12,11 +12,9 @@ public interface CountryRepository extends JpaRepository<Country, String> {
     List<Country> findByOrderByName();
 
     @Query("SELECT DISTINCT c from Country c LEFT join FETCH c.languages order by c.name")
-    List<Country> findAll();
+    List<Country> findByCountryWithLanguage();
 
-    @Query(value = "select cl.language as language from CountryLanguage cl where exists (select c.name as country from Country c where cl.countryCode=c.code)")
+    @Query("SELECT DISTINCT cl.language as language FROM CountryLanguage cl order by language")
     List<LanguageInCountry> findCountryByLanguages();
-
-
 
 }
