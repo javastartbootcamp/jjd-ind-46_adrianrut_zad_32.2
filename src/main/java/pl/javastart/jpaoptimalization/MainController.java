@@ -5,9 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.javastart.jpaoptimalization.country.Country;
 import pl.javastart.jpaoptimalization.country.CountryService;
-import pl.javastart.jpaoptimalization.countrylanguage.CountryLanguage;
-import pl.javastart.jpaoptimalization.countrylanguage.CountryLanguageService;
-import pl.javastart.jpaoptimalization.countrylanguage.LanguageInCountry;
 
 import java.util.*;
 
@@ -39,9 +36,9 @@ public class MainController {
 
     @GetMapping("/jezyki-i-kraje")
     public String getLanguageWithCountry(Model model) {
-        List<LanguageInCountry> countries = countryService.getLanguageWithCountry();
+        Map<String, List<String>> languageWithCountry = countryService.getLanguageWithCountry();
 
-        model.addAttribute("country", countries);
+        model.addAttribute("country", languageWithCountry);
 
         return "languagesWithCountries";
     }

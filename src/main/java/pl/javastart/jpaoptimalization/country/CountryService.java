@@ -3,7 +3,6 @@ package pl.javastart.jpaoptimalization.country;
 import org.springframework.stereotype.Service;
 import pl.javastart.jpaoptimalization.countrylanguage.CountryLanguage;
 import pl.javastart.jpaoptimalization.countrylanguage.CountryLanguageRepository;
-import pl.javastart.jpaoptimalization.countrylanguage.LanguageInCountry;
 
 import java.util.*;
 
@@ -26,28 +25,37 @@ public class CountryService {
         return countryRepository.findByOrderByName();
     }
 
-    public List<LanguageInCountry> findWithLanguage() {
-        return countryRepository.findCountryByLanguages();
+    public Map<String, List<String>> getLanguageWithCountry() {
+        Map<String, String> countryCodes = getCodeWithCountry();
+        List<CountryLanguage> countryLanguages = countryLanguageRepository.findAll();
+        Map<String, List<String>> languageWithCountry = new TreeMap<>();
+        List<String> countries;
+        for (CountryLanguage countryLanguage : countryLanguages) {
+            String language = countryLanguage.getLanguage();
+            if (languageWithCountry.containsKey(language)) {
+                languageWithCountry.get(language).add(countryCodes.get(countryLanguage.getCountryCode()));
+            } else {
+                countries = new ArrayList<>();
+                String countryCode = countryLanguage.getCountryCode();
+                countries.add(countryCodes.get(countryCode));
+                languageWithCountry.put(language, countries);
+            }
+        }
+        return languageWithCountry;
     }
 
-
-    public List<LanguageInCountry> getLanguageWithCountry() {
+    Map<String, String> getCodeWithCountry() {
+        Map<String, String> countryCodes = new HashMap<>();
         List<Country> countryList = countryRepository.findAll();
         List<CountryLanguage> countryLanguages = countryLanguageRepository.findAll();
-        List<LanguageInCountry> languageInCountryList = new ArrayList<>();
-        List<Country> tempList = new ArrayList<>();
-        List<Country> countryWithLanguage;
         for (CountryLanguage countryLanguage : countryLanguages) {
             for (Country country : countryList) {
-                if (Objects.equals(country.getCode(), countryLanguage.getCountryCode())) {
-                    tempList.add(new Country(country.getName()));
+                if (Objects.equals(countryLanguage.getCountryCode(), country.getCode())) {
+                    countryCodes.put(countryLanguage.getCountryCode(), country.getName());
                 }
             }
-            countryWithLanguage = tempList;
-            languageInCountryList.add(new LanguageInCountry(countryLanguage.getLanguage(), countryWithLanguage));
-            tempList.clear();
         }
-        return languageInCountryList;
+        return countryCodes;
     }
 
 }
