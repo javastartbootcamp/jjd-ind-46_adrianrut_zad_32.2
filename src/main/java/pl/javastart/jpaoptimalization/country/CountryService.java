@@ -5,6 +5,7 @@ import pl.javastart.jpaoptimalization.countrylanguage.CountryLanguage;
 import pl.javastart.jpaoptimalization.countrylanguage.CountryLanguageRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CountryService {
@@ -29,33 +30,21 @@ public class CountryService {
         Map<String, String> countryCodes = getCodeWithCountry();
         List<CountryLanguage> countryLanguages = countryLanguageRepository.findAll();
         Map<String, List<String>> languageWithCountry = new TreeMap<>();
-        List<String> countries;
         for (CountryLanguage countryLanguage : countryLanguages) {
             String language = countryLanguage.getLanguage();
-            if (languageWithCountry.containsKey(language)) {
-                languageWithCountry.get(language).add(countryCodes.get(countryLanguage.getCountryCode()));
-            } else {
-                countries = new ArrayList<>();
-                String countryCode = countryLanguage.getCountryCode();
-                countries.add(countryCodes.get(countryCode));
-                languageWithCountry.put(language, countries);
-            }
+            String country = countryCodes.get(countryLanguage.getCountryCode());
+            languageWithCountry.merge(language, new ArrayList<>(){{add(country);}}, (l1,l2) -> {
+                l1.addAll(l2);
+                return l1;
+            });
         }
         return languageWithCountry;
     }
 
     Map<String, String> getCodeWithCountry() {
-        Map<String, String> countryCodes = new HashMap<>();
         List<Country> countryList = countryRepository.findAll();
-        List<CountryLanguage> countryLanguages = countryLanguageRepository.findAll();
-        for (CountryLanguage countryLanguage : countryLanguages) {
-            for (Country country : countryList) {
-                if (Objects.equals(countryLanguage.getCountryCode(), country.getCode())) {
-                    countryCodes.put(countryLanguage.getCountryCode(), country.getName());
-                }
-            }
-        }
-        return countryCodes;
+        return countryList.stream()
+                .collect(Collectors.toMap(Country::getCode, Country::getName));
     }
 
 }
