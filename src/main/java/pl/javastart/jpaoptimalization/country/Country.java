@@ -55,14 +55,19 @@ public class Country {
     @Column(name = "Code2")
     private String code2;
 
-    @OrderBy("Population DESC")
     @OneToMany(mappedBy = "country")
     private Collection<City> cities;
 
-    @OrderBy("Percentage DESC")
     @OneToMany
     @JoinColumn(name = "countryCode")
     private Collection<CountryLanguage> languages;
+
+    public Country() {
+    }
+
+    public Country(String name) {
+        this.name = name;
+    }
 
     public String getCode() {
         return code;

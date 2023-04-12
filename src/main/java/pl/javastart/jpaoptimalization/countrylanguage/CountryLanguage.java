@@ -1,5 +1,7 @@
 package pl.javastart.jpaoptimalization.countrylanguage;
 
+import org.hibernate.annotations.Sort;
+
 import javax.persistence.*;
 
 @Entity

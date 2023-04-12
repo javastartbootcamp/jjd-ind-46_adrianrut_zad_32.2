@@ -8,6 +8,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
             crossorigin="anonymous"></script>
+    <style>
+        ul {
+            list-style-type: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -25,15 +30,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="language: ${languages}">
-            <td th:text="${language.language}"></td>
-            <td>TODO</td>
+        <tr th:each="countryWithLanguage: ${country}">
+            <td th:text="${countryWithLanguage.key}"></td>
+            <td>
+                <ul th:each="country: ${countryWithLanguage.value}">
+                <li th:text="${country}"></li>
+            </ul>
+            </td>
         </tr>
         </tbody>
     </table>
 
 </div>
-
-
 </body>
 </html>
